@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[46,)"
+license="MIT License"
+[[mods]]
+modId="harderfarthergrimcitadels"
+version="${file.jarVersion}"
+displayName="Harder Farther Grim Citadels"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/harder-farther-grim-citadels"
+logoFile="Logo.png"
+authors="MacTso, Lupicus"
+description='Harder Farther Grim Citadels.'
+[[dependencies.harderfarthergrimcitadels]]
+    modId="forge"
+    mandatory=true
+    versionRange="[46,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.harderfarthergrimcitadels]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20,1.21)"
+    ordering="NONE"
+    side="BOTH"
+
+
