@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[46,)"
+license="MIT License"
+[[mods]]
+modId="harderfarthercore"
+version="${file.jarVersion}"
+displayName="Harder Farther Core"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/harder-farther-core"
+logoFile="Logo.png"
+authors="MacTso, Lupicus"
+description='Harder Farther Core.'
+[[dependencies.harderfarthercore]]
+    modId="forge"
+    mandatory=true
+    versionRange="[46,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.experiencebugfix]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20,1.21)"
+    ordering="NONE"
+    side="BOTH"
+
+
