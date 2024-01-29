@@ -27,8 +27,8 @@ public class HarderFartherManager {
 
 	private static BlockPos SURFACE_CENTER_POS = BlockPos.containing(0, 128, 0);
 
-//	private static BlockPos TEST_LIFE_POS = BlockPos.containing(10000, 128, -10000);
-//	private static BlockPos TEST_GRIM_POS = BlockPos.containing(3000, 128, -3000);
+	private static BlockPos TEST_LIFE_POS = BlockPos.containing(10000, 128, -10000);
+	private static BlockPos TEST_GRIM_POS = BlockPos.containing(3000, 128, -3000);
 
 	private static BlockPos worldSpawnPos = SURFACE_CENTER_POS;
 
@@ -56,12 +56,12 @@ public class HarderFartherManager {
 		}
 
 		// TESTING
-		if (grimBlockPosList.size() == 0) {
-			addGrimBlockPosListEntry(TEST_GRIM_POS, 1750);
-		}
-		if (lifeBlockPosList.size() == 0) {
-			addLifeBlockPosListEntry(TEST_LIFE_POS, 500);
-		}
+//		if (grimBlockPosList.size() == 0) {
+//			addGrimBlockPosListEntry(TEST_GRIM_POS, 1750);
+//		}
+//		if (lifeBlockPosList.size() == 0) {
+//			addLifeBlockPosListEntry(TEST_LIFE_POS, 500);
+//		}
 		// TESTING
 
 		double difficultyHere = 0.0d;
