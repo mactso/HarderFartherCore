@@ -3,6 +3,7 @@ package com.mactso.harderfarthercore.events;
 import java.util.Iterator;
 import java.util.List;
 
+import com.mactso.harderfarthercore.HarderFartherManager;
 import com.mactso.harderfarthercore.Main;
 import com.mactso.harderfarthercore.config.MyConfig;
 import com.mactso.harderfarthercore.network.Network;
@@ -29,6 +30,10 @@ public class WorldTickHandler {
 		// this is always serverlevel
 		if (event.level instanceof ServerLevel level) {
 
+			if (HarderFartherManager.getWorldSpawnPos(level)== HarderFartherManager.SURFACE_CENTER_POS) {
+				HarderFartherManager.setWorldSpawnPos(HarderFartherManager.getWorldSpawnPos(level));
+			}
+			
 			long gametime = level.getGameTime();
 
 			List<ServerPlayer> allPlayers = level.getServer().getPlayerList().getPlayers();
