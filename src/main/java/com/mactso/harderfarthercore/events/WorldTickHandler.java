@@ -40,9 +40,11 @@ public class WorldTickHandler {
 			Iterator<ServerPlayer> apI = allPlayers.iterator();
 			
 			SyncFogToClientsPacket msg = new SyncFogToClientsPacket(
+					MyConfig.getFogSetting(),
 					MyConfig.getFogRedPercent(),
 					MyConfig.getFogGreenPercent(),
 					MyConfig.getFogBluePercent());
+			
 			while (apI.hasNext()) { // sends to all players online.
 				ServerPlayer sp = apI.next();
 				if (gametime % 100 == sp.getId() % 100) {

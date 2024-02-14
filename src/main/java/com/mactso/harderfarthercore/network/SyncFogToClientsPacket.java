@@ -8,12 +8,14 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
 public class SyncFogToClientsPacket  {
+		private int fogSetting;
 		private double red;
 		private double green;
 		private double blue;
 	
-		public SyncFogToClientsPacket ( double r, double g, double b)
+		public SyncFogToClientsPacket ( int f, double r, double g, double b)
 		{
+			this.fogSetting = f;
 			this.red = r;
 			this.green = g;
 			this.blue = b;
@@ -24,16 +26,18 @@ public class SyncFogToClientsPacket  {
 			ctx.get().enqueueWork( () -> 
 				{
 					FogColorsEventHandler.setFogRGB(message.red, message.green, message.blue);
+					FogColorsEventHandler.setFogSetting(message.fogSetting);
 				}
 			);
 			ctx.get().setPacketHandled(true);
 		}
 		
 		public static SyncFogToClientsPacket readPacketData(FriendlyByteBuf buf) {
+			int fogSetting = buf.readInt();
 			double red = buf.readDouble();
 			double green = buf.readDouble();
 			double blue = buf.readDouble();
-			return new SyncFogToClientsPacket(red, green, blue);
+			return new SyncFogToClientsPacket(fogSetting, red, green, blue);
 		}
 		
 		public static void writePacketData(SyncFogToClientsPacket msg, FriendlyByteBuf buf)
@@ -43,7 +47,7 @@ public class SyncFogToClientsPacket  {
 		
 		public void encode(FriendlyByteBuf buf)
 		{
-				
+			buf.writeInt(fogSetting);	
 			buf.writeDouble(this.red);
 			buf.writeDouble(this.green);
 			buf.writeDouble(this.blue);

@@ -1,5 +1,6 @@
 package com.mactso.harderfarthercore.events;
 
+import com.mactso.harderfarthercore.config.MyConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
@@ -15,6 +16,7 @@ public class FogColorsEventHandler {
 	private static float sliderFogThickness = 1.0f;
 	private static float sliderStartFogDistance = 1.0f;
 	
+	private static int    fogSettingFromServer = 2;
 	private static double RedFromServer = .85f;
 	private static double GreenFromserver = 0.2f;
 	private static double BlueFromServer = 0.3f;
@@ -40,6 +42,11 @@ public class FogColorsEventHandler {
 		return clientLocalLifeDifficulty;
 	}
 
+	public static void setFogSetting(int f) {
+		fogSettingFromServer = f;
+		
+	}
+	
 	// r,g,b should always be 0 to 1.0f
 	public static void setFogRGB(double r, double g, double b) {
 
@@ -143,6 +150,10 @@ public class FogColorsEventHandler {
 	@SubscribeEvent
 	public void onFogRender(RenderFog event) {
 //		FogMode sky = FogMode.FOG_SKY;
+
+		if (fogSettingFromServer == MyConfig.FOG_OFF) 
+			return;
+		
 		if (event.getMode() == FogMode.FOG_TERRAIN) {
 			Minecraft m = Minecraft.getInstance();
 			LocalPlayer cp = m.player;
@@ -150,12 +161,21 @@ public class FogColorsEventHandler {
 			if ((fogTick != gametick)) {
 				fogTick = gametick;
 
+				// Need code for fogSetting here (0=none,1=grim only
 				float percent = 1.0f;
-				if (clientLocalGrimDifficulty >= clientLocalHighDifficulty) {
-					percent = clientLocalGrimDifficulty;
-				} else {
-					percent = clientLocalGrimDifficulty;
+				if (fogSettingFromServer == MyConfig.FOG_GRIM_LIFE) {
+					if (clientLocalGrimDifficulty >= clientLocalHighDifficulty) {
+						percent = clientLocalGrimDifficulty;
+					}
 				}
+				if (fogSettingFromServer == MyConfig.FOG_EVERY) {
+					if (clientLocalGrimDifficulty >= clientLocalHighDifficulty) {
+						percent = clientLocalGrimDifficulty;
+					}
+				} else {
+					percent = clientLocalHighDifficulty;
+				}
+
 
 				if ((percent > 0.0f) && (percent < 0.05f)) {
 					percent = 0.05f;
@@ -177,5 +197,6 @@ public class FogColorsEventHandler {
 		}
 
 	}
+
 
 }

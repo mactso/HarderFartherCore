@@ -33,19 +33,17 @@ public class HarderFartherManager {
 
 	private static BlockPos worldSpawnPos = SURFACE_CENTER_POS;
 
-	
 	public static void addGrimBlockPosListEntry(BlockPos pos, int range) {
 		grimBlockPosList.add(pos);
 		setGrimRange(range);
 	}
-	
-	
+
 	public static void addLifeBlockPosListEntry(BlockPos pos, int range) {
 		lifeBlockPosList.add(pos);
 		setLifeRange(range);
 
 	}
-	
+
 	public static float calcBasicDistanceDifficulty(BlockPos pos) {
 		return 0.68f;
 	}
@@ -57,7 +55,7 @@ public class HarderFartherManager {
 	public static void delLifeBlockPosListEntry(BlockPos pos) {
 		lifeBlockPosList.remove(pos);
 	}
-	
+
 	private static BlockPos getClosestPos(List<BlockPos> list, BlockPos pos) {
 		BlockPos closePos = null;
 		double dist = Double.MAX_VALUE;
@@ -74,26 +72,26 @@ public class HarderFartherManager {
 		Utility.debugMsg(2, "HarderFartherManager.getdifficulty top");
 
 		double difficultyHere = 0.0d;
-		
+
 		double lifeDifficulty = 0.0d;
 		double lifeDistance = Double.MAX_VALUE;
 		BlockPos lifePos = getClosestPos(lifeBlockPosList, pos);
-		
+
 		double grimDifficulty = 0.0d;
 		double grimDistance = 0.0d;
 		BlockPos grimPos = getClosestPos(grimBlockPosList, pos);
-		
+
 		double worldSpawnDifficulty = 0.0d;
 		double worldSpawnDistance = 0.0d;
-		
+
 		worldSpawnDistance = getWorldSpawnDistance(worldSpawnPos, pos);
 		worldSpawnDifficulty = getWorldSpawnDifficulty(pos, worldSpawnDistance);
 
 		difficultyHere = worldSpawnDifficulty;
-		
+
 		if (!lifeBlockPosList.isEmpty()) {
 			lifeDistance = getLifeDistance(pos);
-			lifePos	     = getLifePos(pos);
+			lifePos = getLifePos(pos);
 			if (lifeDistance < lifeRange) {
 				lifeDifficulty = Math.max(0.0D, 0.8 - (lifeRange - lifeDistance) / lifeRange);
 				if (lifeDifficulty < difficultyHere) {
@@ -111,10 +109,9 @@ public class HarderFartherManager {
 					difficultyHere = grimDifficulty;
 				}
 
-
 			}
 		}
-		
+
 		System.out.println("(pos) Diff: " + difficultyHere);
 		Utility.debugMsg(2, "HarderFartherManager.getdifficulty end returning " + difficultyHere);
 		return (float) difficultyHere;
@@ -143,24 +140,24 @@ public class HarderFartherManager {
 		}
 
 		// TESTING
-//		if (grimBlockPosList.size() == 0) {
-//			addGrimBlockPosListEntry(TEST_GRIM_POS, 1750);
-//		}
-//		if (lifeBlockPosList.size() == 0) {
-//			addLifeBlockPosListEntry(TEST_LIFE_POS, 500);
-//		}
+		if (grimBlockPosList.size() == 0) {
+			addGrimBlockPosListEntry(TEST_GRIM_POS, 1750);
+		}
+		if (lifeBlockPosList.size() == 0) {
+			addLifeBlockPosListEntry(TEST_LIFE_POS, 500);
+		}
 		// TESTING
 
 		double difficultyHere = 0.0d;
-		
+
 		double lifeDifficulty = 0.0d;
 		double lifeDistance = Double.MAX_VALUE;
 		BlockPos lifePos = getClosestPos(lifeBlockPosList, pos);
-		
+
 		double grimDifficulty = 0.0d;
 		double grimDistance = 0.0d;
 		BlockPos grimPos = getClosestPos(grimBlockPosList, pos);
-		
+
 		double worldSpawnDifficulty = 0.0d;
 		double worldSpawnDistance = 0.0d;
 
@@ -168,10 +165,10 @@ public class HarderFartherManager {
 		worldSpawnDifficulty = getWorldSpawnDifficulty(pos, worldSpawnDistance);
 
 		difficultyHere = worldSpawnDifficulty;
-		
+
 		if (!lifeBlockPosList.isEmpty()) {
 			lifeDistance = getLifeDistance(pos);
-			lifePos	     = getLifePos(pos);
+			lifePos = getLifePos(pos);
 			if (lifeDistance < lifeRange) {
 				lifeDifficulty = Math.max(0.0D, 0.8 - (lifeRange - lifeDistance) / lifeRange);
 				if (lifeDifficulty < difficultyHere) {
@@ -192,24 +189,24 @@ public class HarderFartherManager {
 				makeGrimPointMarker(le, serverLevel, pos, gameTime);
 			}
 		}
-		
+
 //		System.out.println (le.getDisplayName().getString());
 		if (le instanceof ServerPlayer sp) {
-			System.out.println("HFM sending difficulty, spawn:"+worldSpawnDifficulty + " life:" + lifeDifficulty + " grim:" + grimDifficulty);
+			System.out.println("HFM sending difficulty, spawn:" + worldSpawnDifficulty + " life:" + lifeDifficulty
+					+ " grim:" + grimDifficulty);
 			Utility.debugMsg(2, "getdifficulty here network message");
 
-			SyncDifficultyToClientsPacket msg = new SyncDifficultyToClientsPacket((float)difficultyHere,(float)difficultyHere,(float)difficultyHere);
+			SyncDifficultyToClientsPacket msg = new SyncDifficultyToClientsPacket((float) difficultyHere,
+					(float) grimDifficulty, (float) lifeDifficulty);
 			Network.sendToClient(msg, sp);
 
-		}	
+		}
 
 		System.out.println("Diff: " + difficultyHere);
 		Utility.debugMsg(2, "HarderFartherManager.getdifficulty end returning " + difficultyHere);
 		return (float) difficultyHere;
 
 	}
-	
-	
 
 	private static double getGrimDistance(BlockPos pos) {
 		double grimDistance;
@@ -225,8 +222,6 @@ public class HarderFartherManager {
 		return grimRange;
 	}
 
-	
-	
 	private static double getLifeDistance(BlockPos pos) {
 		double lifeDistance;
 		lifeDistance = Math.sqrt(pos.distSqr(getClosestPos(lifeBlockPosList, pos)));
@@ -262,12 +257,12 @@ public class HarderFartherManager {
 	}
 
 	private static void makeGrimPointMarker(LivingEntity le, ServerLevel serverLevel, BlockPos pos, long gameTime) {
-		if ((gameTime%20 ==2) && (le instanceof ServerPlayer)) {
+		if ((gameTime % 20 == 2) && (le instanceof ServerPlayer)) {
 
 			ServerPlayer sp = (ServerPlayer) le;
 			BlockPos gpos = getClosestPos(grimBlockPosList, pos);
 			double x = gpos.getX();
-			double y = serverLevel.getHeightmapPos(Types.MOTION_BLOCKING_NO_LEAVES, pos).getY()+ 8.0d;
+			double y = serverLevel.getHeightmapPos(Types.MOTION_BLOCKING_NO_LEAVES, pos).getY() + 8.0d;
 			double z = gpos.getZ();
 			boolean overrideLimiter = true;
 			int count = 15;
@@ -275,36 +270,38 @@ public class HarderFartherManager {
 			float yDist = 0.25f;
 			float zDist = 0.15f;
 			float maxSpeed = 0.15f;
-			serverLevel.sendParticles(sp, ParticleTypes.DRIPPING_LAVA, overrideLimiter, x, y, z, count, xDist, yDist, zDist, maxSpeed);
-			
+			serverLevel.sendParticles(sp, ParticleTypes.DRIPPING_LAVA, overrideLimiter, x, y, z, count, xDist, yDist,
+					zDist, maxSpeed);
+
 			count = 3;
 			maxSpeed = 0.25f;
-			
-			serverLevel.sendParticles(sp, ParticleTypes.FALLING_OBSIDIAN_TEAR, overrideLimiter, x, y, z, count, xDist, yDist, zDist, maxSpeed);
+
+			serverLevel.sendParticles(sp, ParticleTypes.FALLING_OBSIDIAN_TEAR, overrideLimiter, x, y, z, count, xDist,
+					yDist, zDist, maxSpeed);
 
 		}
 	}
 
 	private static void makeLifePointMarker(LivingEntity le, ServerLevel serverLevel, BlockPos pos, long gameTime) {
-		if ((gameTime%20 ==2) && (le instanceof ServerPlayer)) {
+		if ((gameTime % 20 == 2) && (le instanceof ServerPlayer)) {
 			ServerPlayer sp = (ServerPlayer) le;
 			BlockPos lpos = getClosestPos(lifeBlockPosList, pos);
 			double x = lpos.getX();
-			double y = serverLevel.getHeightmapPos(Types.MOTION_BLOCKING_NO_LEAVES, pos).getY()+ 8.0d;
+			double y = serverLevel.getHeightmapPos(Types.MOTION_BLOCKING_NO_LEAVES, pos).getY() + 8.0d;
 			double z = lpos.getZ();
 
 			boolean overrideLimiter = true;
-			
 
 			int count = 15;
-			
+
 			float xDist = 0.05f;
 			float yDist = 0.05f;
 			float zDist = 0.05f;
 			float maxSpeed = 0.05f;
 
 			System.out.println("sent particles");
-			serverLevel.sendParticles(sp, ParticleTypes.END_ROD, overrideLimiter, x, y, z, count, xDist, yDist, zDist, maxSpeed);
+			serverLevel.sendParticles(sp, ParticleTypes.END_ROD, overrideLimiter, x, y, z, count, xDist, yDist, zDist,
+					maxSpeed);
 		}
 	}
 
@@ -316,7 +313,7 @@ public class HarderFartherManager {
 		HarderFartherManager.lifeRange = lifeRange;
 	}
 
-	public static void setWorldSpawnPos (BlockPos pos) {
+	public static void setWorldSpawnPos(BlockPos pos) {
 		worldSpawnPos = pos;
 	}
 

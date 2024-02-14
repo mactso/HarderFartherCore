@@ -29,7 +29,11 @@ public class MyConfig {
 	private static final Logger LOGGER = LogManager.getLogger();
 	public static final Common COMMON;
 	public static final ForgeConfigSpec COMMON_SPEC;
-
+	public static final int FOG_OFF = 0;
+	public static final int FOG_GRIM_LIFE = 1;
+	public static final int FOG_EVERY = 2;
+	
+	
 	static
 	{
 		final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
@@ -120,6 +124,9 @@ public class MyConfig {
 		return onlyOverworld;
 	}	
 	
+	public static int getFogSetting() {
+		return fogSetting;
+	}
 	
 	public static double getFogRedPercent() {
 		return fogRedPercent;
@@ -145,6 +152,7 @@ public class MyConfig {
 	private static int speedBoost;
 	private static int atkDmgBoost;
 	private static int knockbackBoost;
+	private static int	    fogSetting;
 	private static double 	fogRedPercent;
 	private static double 	fogGreenPercent;
 	private static double 	fogBluePercent;
@@ -176,6 +184,7 @@ public class MyConfig {
 		COMMON.minimumSafeAltitude.set(minimumSafeAltitude  );
 		COMMON.maximumSafeAltitude.set(maximumSafeAltitude  );
 		
+		COMMON.fogSetting.set (fogSetting);
 		COMMON.fogRedPercent.set (fogRedPercent);
 		COMMON.fogBluePercent.set (fogBluePercent);
 		COMMON.fogGreenPercent.set (fogGreenPercent);
@@ -210,7 +219,7 @@ public class MyConfig {
 		
 
 
-		
+		fogSetting = COMMON.fogSetting.get();		
 		fogRedPercent = COMMON.fogRedPercent.get();
 		fogBluePercent = COMMON.fogBluePercent.get();
 		fogGreenPercent = COMMON.fogGreenPercent.get();
@@ -242,6 +251,7 @@ public class MyConfig {
 		public final IntValue knockbackBoost;
 
 		
+		public final IntValue fogSetting;
 		public final DoubleValue fogRedPercent;
 		public final DoubleValue fogBluePercent;
 		public final DoubleValue fogGreenPercent;
@@ -316,6 +326,11 @@ public class MyConfig {
 		builder.pop();
 
 		builder.push("Fog Color Settings");			
+		fogSetting = builder
+				.comment("Fog Setting: 0=off, 1 only grim citadels and life points, 2=everywhere ")
+				.translation(Main.MODID + ".config." + "fogSetting")
+				.defineInRange("fogSetting", () -> MyConfig.FOG_GRIM_LIFE, MyConfig.FOG_OFF, MyConfig.FOG_EVERY);	
+
 		fogRedPercent = builder
 				.comment("fogRedPercent : Fog Red Component Multiplier")
 				.translation(Main.MODID + ".config." + "fogRedPercent")
@@ -336,6 +351,11 @@ public class MyConfig {
 		
 	}
 	
+
+	public IntValue getFogSetting() {
+			return fogSetting;
+		}
+
 
 	public static boolean isString(Object o)
 	{
