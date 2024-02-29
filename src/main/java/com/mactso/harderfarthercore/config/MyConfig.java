@@ -124,6 +124,7 @@ public class MyConfig {
 		return onlyOverworld;
 	}	
 	
+
 	public static int getFogSetting() {
 		return fogSetting;
 	}
@@ -132,14 +133,27 @@ public class MyConfig {
 		return fogRedPercent;
 	}
 
+	public static void setFogRedPercent(double fogRedPercent) {
+		MyConfig.fogRedPercent = fogRedPercent;
+	}
+
 	public static double getFogGreenPercent() {
 		return fogGreenPercent;
+	}
+
+	public static void setFogGreenPercent(double fogGreenPercent) {
+		MyConfig.fogGreenPercent = fogGreenPercent;
 	}
 
 	public static double getFogBluePercent() {
 		return fogBluePercent;
 	}
 	
+	public static void setFogBluePercent(double fogBluePercent) {
+		MyConfig.fogBluePercent = fogBluePercent;
+	}
+
+
 	private static int      debugLevel;
 	private static boolean  onlyOverworld;
 	private static List<? extends String> dimensionOmitList;

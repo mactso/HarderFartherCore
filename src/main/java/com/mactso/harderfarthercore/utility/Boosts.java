@@ -74,7 +74,6 @@ public class Boosts {
 
 				Utility.debugMsg(2, le, "--Boost " + eDsc + " " + startHealth + " health to " + le.getHealth()
 						+ " with hb= " + healthBoost + "at diff=" + difficulty);
-
 			} else {
 				Utility.debugMsg(1, le, "erBoost: " + eDsc + " " + le.getHealth() + " MaxHealth attribute null.");
 			}
@@ -199,7 +198,7 @@ public class Boosts {
 			return;
 
 		float difficulty = HarderFartherManager.getDifficulty( le );
-		
+		int x = 3;
 		if (fieldXpReward == null) { // should not fail except when developing a new version or if someone removed
 			// this field.
 			return;

@@ -8,7 +8,6 @@ import com.mactso.harderfarthercore.network.Network;
 import com.mactso.harderfarthercore.network.SyncDifficultyToClientsPacket;
 import com.mactso.harderfarthercore.utility.Utility;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -112,7 +111,7 @@ public class HarderFartherManager {
 			}
 		}
 
-		System.out.println("(pos) Diff: " + difficultyHere);
+//		System.out.println("(pos) Diff: " + difficultyHere);
 		Utility.debugMsg(2, "HarderFartherManager.getdifficulty end returning " + difficultyHere);
 		return (float) difficultyHere;
 	}
@@ -140,12 +139,12 @@ public class HarderFartherManager {
 		}
 
 		// TESTING
-		if (grimBlockPosList.size() == 0) {
-			addGrimBlockPosListEntry(TEST_GRIM_POS, 1750);
-		}
-		if (lifeBlockPosList.size() == 0) {
-			addLifeBlockPosListEntry(TEST_LIFE_POS, 500);
-		}
+//		if (grimBlockPosList.size() == 0) {
+//			addGrimBlockPosListEntry(TEST_GRIM_POS, 1750);
+//		}
+//		if (lifeBlockPosList.size() == 0) {
+//			addLifeBlockPosListEntry(TEST_LIFE_POS, 500);
+//		}
 		// TESTING
 
 		double difficultyHere = 0.0d;
@@ -163,7 +162,8 @@ public class HarderFartherManager {
 
 		worldSpawnDistance = getWorldSpawnDistance(worldSpawnPos, pos);
 		worldSpawnDifficulty = getWorldSpawnDifficulty(pos, worldSpawnDistance);
-
+		int x = 3;
+		
 		difficultyHere = worldSpawnDifficulty;
 
 		if (!lifeBlockPosList.isEmpty()) {
@@ -192,7 +192,7 @@ public class HarderFartherManager {
 
 //		System.out.println (le.getDisplayName().getString());
 		if (le instanceof ServerPlayer sp) {
-			System.out.println("HFM sending difficulty, spawn:" + worldSpawnDifficulty + " life:" + lifeDifficulty
+			Utility.debugMsg(2,"HFM sending difficulty, spawn:" + worldSpawnDifficulty + " life:" + lifeDifficulty
 					+ " grim:" + grimDifficulty);
 			Utility.debugMsg(2, "getdifficulty here network message");
 
@@ -202,7 +202,7 @@ public class HarderFartherManager {
 
 		}
 
-		System.out.println("Diff: " + difficultyHere);
+//		System.out.println("Diff: " + difficultyHere);
 		Utility.debugMsg(2, "HarderFartherManager.getdifficulty end returning " + difficultyHere);
 		return (float) difficultyHere;
 

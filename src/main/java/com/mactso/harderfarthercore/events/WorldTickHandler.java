@@ -30,9 +30,9 @@ public class WorldTickHandler {
 		// this is always serverlevel
 		if (event.level instanceof ServerLevel level) {
 
-			if (HarderFartherManager.getWorldSpawnPos(level)== HarderFartherManager.SURFACE_CENTER_POS) {
-				HarderFartherManager.setWorldSpawnPos(HarderFartherManager.getWorldSpawnPos(level));
-			}
+//			if (HarderFartherManager.getWorldSpawnPos(level)== HarderFartherManager.SURFACE_CENTER_POS) {
+			HarderFartherManager.setWorldSpawnPos(HarderFartherManager.getWorldSpawnPos(level));
+//			}
 			
 			long gametime = level.getGameTime();
 

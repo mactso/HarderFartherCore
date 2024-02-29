@@ -6,7 +6,6 @@ import com.mactso.harderfarthercore.utility.Utility;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Monster;
@@ -26,7 +25,7 @@ public class LivingEventMovementHandler {
 		LivingEntity le = event.getEntity();
 		if (le instanceof ServerPlayer) {
 			float difficultyHere = HarderFartherManager.getDifficulty(le);
-			System.out.println("Player: " + le.getDisplayName().getString() + " Difficulty Here: " + difficultyHere);
+			Utility.debugMsg(2,"Player: " + le.getDisplayName().getString() + " Difficulty Here: " + difficultyHere);
 		}
 		if (le.level() instanceof ServerLevel) {
 			// "enter world event" horked as of 1.19. Moved boosts here..

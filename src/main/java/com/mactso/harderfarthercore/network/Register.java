@@ -14,19 +14,6 @@ public class Register {
 				SyncDifficultyToClientsPacket::readPacketData,
 				SyncDifficultyToClientsPacket::processPacket);
 
-//	    Network.registerMessage(SyncRemoveOneGCFromOneClientPacket.class,
-//		SyncRemoveOneGCFromOneClientPacket::writePacketData,
-//		SyncRemoveOneGCFromOneClientPacket::readPacketData,
-//		SyncRemoveOneGCFromOneClientPacket::processSyncRemoveOneGCFromOneClientPacket);
 
-//Network.registerMessage(SyncAllGCWithClientPacket.class,
-//		SyncAllGCWithClientPacket::writePacketData,
-//		SyncAllGCWithClientPacket::readPacketData,
-//		SyncAllGCWithClientPacket::processPacket);
-		
-//		Network.registerMessage(GrimClientSongPacket.class,
-//				GrimClientSongPacket::writePacketData,
-//				GrimClientSongPacket::readPacketData,
-//				GrimClientSongPacket::processPacket);
 	}
 }

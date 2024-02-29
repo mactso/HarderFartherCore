@@ -4,9 +4,8 @@ import java.lang.reflect.Field;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import com.mactso.harderfarthercore.command.MyCommands;
 import com.mactso.harderfarthercore.config.MyConfig;
 import com.mactso.harderfarthercore.events.FogColorsEventHandler;
 import com.mactso.harderfarthercore.events.LivingEventMovementHandler;
@@ -16,15 +15,16 @@ import com.mactso.harderfarthercore.utility.Utility;
 
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.coremod.api.ASMAPI;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -60,6 +60,7 @@ public class Main {
 	    {
 	        Register.initPackets();
 	    }
+	    
 	    
 		@SubscribeEvent 
 		public void preInit (final FMLCommonSetupEvent event) {
@@ -97,10 +98,16 @@ public class Main {
 				}
 				
 		}
-	    
-//		@SubscribeEvent 		
-//		public static void onCommandsRegistry(final RegisterCommandsEvent event) {
-//			Utility.debugMsg(0,"Harder Farther: Registering Command Dispatcher");
-//			HarderFartherCommands.register(event.getDispatcher());			
-//		}
+
+		@Mod.EventBusSubscriber(bus = Bus.FORGE)
+		public static class ForgeEvents
+		{
+			@SubscribeEvent 		
+			public static void onCommandsRegistry(final RegisterCommandsEvent event) {
+				Utility.debugMsg(0,"Harder Farther Core: Registering Command Dispatcher");
+				MyCommands.register(event.getDispatcher());			
+			}			
+		}
+		
+
 }
