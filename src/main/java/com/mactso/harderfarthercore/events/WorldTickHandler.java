@@ -5,9 +5,6 @@ import java.util.List;
 
 import com.mactso.harderfarthercore.HarderFartherManager;
 import com.mactso.harderfarthercore.Main;
-import com.mactso.harderfarthercore.config.MyConfig;
-import com.mactso.harderfarthercore.network.Network;
-import com.mactso.harderfarthercore.network.SyncFogToClientsPacket;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,18 +36,18 @@ public class WorldTickHandler {
 			List<ServerPlayer> allPlayers = level.getServer().getPlayerList().getPlayers();
 			Iterator<ServerPlayer> apI = allPlayers.iterator();
 			
-			SyncFogToClientsPacket msg = new SyncFogToClientsPacket(
-					MyConfig.getFogSetting(),
-					MyConfig.getFogRedPercent(),
-					MyConfig.getFogGreenPercent(),
-					MyConfig.getFogBluePercent());
+//			SyncFogToClientsPacket msg = new SyncFogToClientsPacket(
+//					MyConfig.getFogSetting(),
+//					MyConfig.getFogRedPercent(),
+//					MyConfig.getFogGreenPercent(),
+//					MyConfig.getFogBluePercent());
 			
-			while (apI.hasNext()) { // sends to all players online.
-				ServerPlayer sp = apI.next();
-				if (gametime % 100 == sp.getId() % 100) {
-					Network.sendToClient(msg, sp);
-				}
-			}
+//			while (apI.hasNext()) { // sends to all players online.
+//				ServerPlayer sp = apI.next();
+//				if (gametime % 100 == sp.getId() % 100) {
+//					Network.sendToClient(msg, sp);
+//				}
+//			}
 		}
 	}
 

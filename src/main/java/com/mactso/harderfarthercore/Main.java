@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.mactso.harderfarthercore.command.MyCommands;
 import com.mactso.harderfarthercore.config.MyConfig;
-import com.mactso.harderfarthercore.events.FogColorsEventHandler;
 import com.mactso.harderfarthercore.events.LivingEventMovementHandler;
 import com.mactso.harderfarthercore.events.WorldTickHandler;
 import com.mactso.harderfarthercore.network.Register;
@@ -50,7 +49,7 @@ public class Main {
 	    @SubscribeEvent
 	    public void setupClient(final FMLClientSetupEvent event) {
 	    	
-			MinecraftForge.EVENT_BUS.register(new FogColorsEventHandler());
+//			MinecraftForge.EVENT_BUS.register(new FogColorsEventHandler());
 // Grim	code // ModBlocks.setRenderLayer();
 			
 	    }

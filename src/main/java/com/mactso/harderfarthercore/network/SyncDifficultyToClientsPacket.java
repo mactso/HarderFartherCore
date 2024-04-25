@@ -1,7 +1,5 @@
 package com.mactso.harderfarthercore.network;
 
-import com.mactso.harderfarthercore.events.FogColorsEventHandler;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.event.network.CustomPayloadEvent.Context;
 
@@ -21,7 +19,7 @@ public class SyncDifficultyToClientsPacket  {
 		{
 			ctx.enqueueWork( () -> 
 				{
-					FogColorsEventHandler.setLocalDifficulty(message.spawnDifficulty, message.grimDifficulty, message.lifeDifficulty);
+//					FogColorsEventHandler.setLocalDifficulty(message.spawnDifficulty, message.grimDifficulty, message.lifeDifficulty);
 				}
 			);
 			ctx.setPacketHandled(true);
