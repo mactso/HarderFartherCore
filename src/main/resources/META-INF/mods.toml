@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[48,)"
+loaderVersion="[52,)"
 license="MIT License"
 [[mods]]
 modId="harderfarthercore"
@@ -12,14 +12,14 @@ description='Harder Farther Core.'
 [[dependencies.harderfarthercore]]
     modId="forge"
     mandatory=true
-    versionRange="[48,)"
+    versionRange="[52,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.harderfarthercore]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.20.2,1.21)"
+    versionRange="[1.21.1,1.22)"
     ordering="NONE"
     side="BOTH"
 
