@@ -22,11 +22,11 @@ public class MyCommands {
 		String chatMessage = "\nDimension: " + dimensionName + "\n Current Values";
 		Utility.sendBoldChat(p, chatMessage, ChatFormatting.DARK_GREEN);
 
-		chatMessage = "  Harder Max Distance From Spawn....: " + MyConfig.getBoostMaxDistance() + " blocks."				+ " blocks." 
-				+ "\n  Difficulty here is .......................:" + printDifficulty + "%"
-				+ "\n  Debug Level ..................................................: "
-				+ MyConfig.getDebugLevel() + "\n  Only In Overworld ....................................: "
-				+ MyConfig.isOnlyOverworld()  ;
+		chatMessage = "  Boosts Reach Maximum Value....: " + MyConfig.getBoostMaxDistance() + " blocks from Spawn."
+				+ "\n  Boosts Start .........................................: " + MyConfig.getBoostMinDistance() + " blocks from Spawn."
+				+ "\n  Difficulty here is ..............................: " + printDifficulty + "%"
+				+ "\n  Only In Overworld ...........................: " + MyConfig.isOnlyOverworld()  
+				+ "\n  Debug Level ..........................................: " + MyConfig.getDebugLevel() ;
 		Utility.sendChat(p, chatMessage, ChatFormatting.GREEN);
 
 	}
