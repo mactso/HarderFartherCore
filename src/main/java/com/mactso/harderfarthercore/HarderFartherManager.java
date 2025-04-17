@@ -252,7 +252,7 @@ public class HarderFartherManager {
 	public static BlockPos getWorldSpawnPos(ServerLevel serverLevel) {
 
 		LevelData winfo = serverLevel.getLevelData();
-		return BlockPos.containing(winfo.getXSpawn(), winfo.getYSpawn(), winfo.getZSpawn());
+		return BlockPos.containing(winfo.getSpawnPos().getX(), winfo.getSpawnPos().getY(), winfo.getSpawnPos().getZ());
 
 	}
 

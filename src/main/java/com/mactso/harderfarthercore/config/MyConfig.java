@@ -55,7 +55,7 @@ public class MyConfig {
 		return dimensionOmitList.contains(dimensionName);
 	}
 	
-	public static boolean isHpMaxBoosted() {
+	public static boolean isHealthBoosted() {
 		if (hpMaxBoost > 0) return true;
 		return false;
 	}
@@ -105,19 +105,19 @@ public class MyConfig {
 	}
 
 	public static float getHpMaxPercent() {
-		return (float) (hpMaxBoost/100);
+		return ((float)hpMaxBoost/100.0f);
 	}
 
 	public static float getSpeedPercent()  {
-		return ((float)speedBoost/100);
+		return ((float)speedBoost/100.0f);
 	}
 
 	public static float getAtkPercent()  {
-		return (float) (atkDmgBoost/100);
+		return ((float)atkDmgBoost/100.0f);
 	}
 
 	public static float getKnockBackPercent() {
-		return (float) (knockbackBoost/100);
+		return ((float)knockbackBoost/100.0f);
 	}
 	
 	public static boolean isOnlyOverworld() {
