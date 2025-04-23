@@ -17,10 +17,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
@@ -80,7 +80,8 @@ public class Utility {
 		MutableComponent component = Component.literal(chatMessage);
 		component.setStyle(component.getStyle().withBold(true));
 		component.setStyle(component.getStyle().withColor(textColor));
-		p.sendSystemMessage(component);
+	    p.displayClientMessage(component, false);	
+//		p.sendSystemMessage(component);
 
 	}
 
@@ -88,7 +89,8 @@ public class Utility {
 
 		MutableComponent component = Component.literal(chatMessage);
 		component.setStyle(component.getStyle().withColor(textColor));
-		p.sendSystemMessage(component);
+	    p.displayClientMessage(component, false);	
+//		p.sendSystemMessage(component);
 
 	}
 
@@ -138,9 +140,9 @@ public class Utility {
 			return false;
 		for (int i = 0; i <= numZP; i++) {
 			if (et == EntityType.PHANTOM) {
-				e = (Mob) et.spawn(level, savePos.north(2).west(2), MobSpawnType.SPAWNER);
+				e = (Mob) et.spawn(level, savePos.north(2).west(2), EntitySpawnReason.SPAWNER );
 			} else {
-				e = (Mob) et.spawn(level, savePos.north(2).west(2), MobSpawnType.NATURAL);
+				e = (Mob) et.spawn(level, savePos.north(2).west(2), EntitySpawnReason.NATURAL);
 			}
 			if (e == null) {
 				return false;

@@ -162,7 +162,6 @@ public class HarderFartherManager {
 
 		worldSpawnDistance = getWorldSpawnDistance(worldSpawnPos, pos);
 		worldSpawnDifficulty = getWorldSpawnDifficulty(pos, worldSpawnDistance);
-		int x = 3;
 		
 		difficultyHere = worldSpawnDifficulty;
 
@@ -264,20 +263,19 @@ public class HarderFartherManager {
 			double x = gpos.getX();
 			double y = serverLevel.getHeightmapPos(Types.MOTION_BLOCKING_NO_LEAVES, pos).getY() + 8.0d;
 			double z = gpos.getZ();
-			boolean overrideLimiter = true;
+			boolean force = true;
 			int count = 15;
-			float xDist = 0.25f;
-			float yDist = 0.25f;
-			float zDist = 0.15f;
-			float maxSpeed = 0.15f;
-			serverLevel.sendParticles(sp, ParticleTypes.DRIPPING_LAVA, overrideLimiter, x, y, z, count, xDist, yDist,
-					zDist, maxSpeed);
+			double dx = 0.25f;
+			double dy = 0.25f;
+			double dz = 0.15f;
+			double speed = 0.15f;
+
+			serverLevel.sendParticles(sp, ParticleTypes.DRIPPING_LAVA, force, force, x , y, z, count, dx, dy, dz, speed);
 
 			count = 3;
-			maxSpeed = 0.25f;
+			speed = 0.25f;
 
-			serverLevel.sendParticles(sp, ParticleTypes.FALLING_OBSIDIAN_TEAR, overrideLimiter, x, y, z, count, xDist,
-					yDist, zDist, maxSpeed);
+			serverLevel.sendParticles(sp, ParticleTypes.FALLING_OBSIDIAN_TEAR, force, force, x , y, z, count, dx, dy, dz, speed);
 
 		}
 	}
@@ -290,18 +288,17 @@ public class HarderFartherManager {
 			double y = serverLevel.getHeightmapPos(Types.MOTION_BLOCKING_NO_LEAVES, pos).getY() + 8.0d;
 			double z = lpos.getZ();
 
-			boolean overrideLimiter = true;
+			boolean force = true;
 
 			int count = 15;
 
-			float xDist = 0.05f;
-			float yDist = 0.05f;
-			float zDist = 0.05f;
-			float maxSpeed = 0.05f;
+			double dx = 0.05f;
+			double dy = 0.05f;
+			double dz = 0.05f;
+			double speed = 0.05f;
 
-			System.out.println("sent particles");
-			serverLevel.sendParticles(sp, ParticleTypes.END_ROD, overrideLimiter, x, y, z, count, xDist, yDist, zDist,
-					maxSpeed);
+			serverLevel.sendParticles(sp, ParticleTypes.END_ROD, force, force, x , y, z, count, dx, dy, dz, speed);
+
 		}
 	}
 
