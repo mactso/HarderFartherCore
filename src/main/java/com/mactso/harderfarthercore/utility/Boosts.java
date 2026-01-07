@@ -9,7 +9,7 @@ import com.mactso.harderfarthercore.HarderFartherManager;
 import com.mactso.harderfarthercore.config.MyConfig;
 
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -17,12 +17,13 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
-import net.minecraft.world.entity.monster.CaveSpider;
+
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Spider;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.skeleton.AbstractSkeleton;
+import net.minecraft.world.entity.monster.spider.CaveSpider;
+import net.minecraft.world.entity.monster.spider.Spider;
+import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraftforge.coremod.api.ASMAPI;
 
 public class Boosts {
@@ -43,23 +44,23 @@ public class Boosts {
 	}
 
 //	UUID HF_HEALTH_BOOST = UUID.fromString("9ea04686-ff0c-4252-8de7-19b973c8567e");
-	private static final ResourceLocation HF_HEALTH_BOOST_ID = ResourceLocation
+	private static final Identifier HF_HEALTH_BOOST_ID = Identifier
 			.fromNamespaceAndPath("harderfarthercore", "healthboost");
 
 //	UUID MAX_SPEED = UUID.fromString("5d5d890a-7e40-4214-b86a-34640749c334");
-	private static final ResourceLocation HF_MOVE_BOOST_ID = ResourceLocation.fromNamespaceAndPath("harderfarthercore",
+	private static final Identifier HF_MOVE_BOOST_ID = Identifier.fromNamespaceAndPath("harderfarthercore",
 			"moveboost");
 
 //	UUID MAX_ATTACK = UUID.fromString("18781eb6-da89-4b2e-b47b-a961ab7fafac");
-	private static final ResourceLocation HF_ATK_BOOST_ID = ResourceLocation.fromNamespaceAndPath("harderfarthercore",
+	private static final Identifier HF_ATK_BOOST_ID = Identifier.fromNamespaceAndPath("harderfarthercore",
 			"atkboost");
 
 //	UUID MAX_KNOCKBACK = UUID.fromString("834d99ba-f10c-4cdf-ab86-580a08b8ac55");
-	private static final ResourceLocation HF_KNOCKBACK_BOOST_ID = ResourceLocation
+	private static final Identifier HF_KNOCKBACK_BOOST_ID = Identifier
 			.fromNamespaceAndPath("harderfarthercore", "kbboost");
 
 	private static void boostHealth(LivingEntity le, String eDsc, float difficulty, Holder<Attribute> attr,
-			ResourceLocation boostId) {
+			Identifier boostId) {
 
 		if (!isEntityAttributeBoostable(le, eDsc, attr, boostId)) {
 			return;
@@ -77,7 +78,7 @@ public class Boosts {
 	}
 
 	private static void boostAtkDmg(LivingEntity le, String eDsc, float difficulty, Holder<Attribute> attr,
-			ResourceLocation boostId) {
+			Identifier boostId) {
 
 		if (!isEntityAttributeBoostable(le, eDsc, attr, boostId)) {
 			return;
@@ -95,7 +96,7 @@ public class Boosts {
 
 	// note KnockBack Resistance ranges from 0 to 100% (0.0f to 1.0f)
 	private static void boostKnockbackResistance(LivingEntity le, String eDsc, float difficulty, Holder<Attribute> attr,
-			ResourceLocation boostId) {
+			Identifier boostId) {
 
 		if (!isEntityAttributeBoostable(le, eDsc, attr, boostId)) {
 			return;
@@ -116,7 +117,7 @@ public class Boosts {
 	}
 
 	private static void boostSpeed(LivingEntity le, String eDsc, float difficulty, Holder<Attribute> attr,
-			ResourceLocation boostId) {
+			Identifier boostId) {
 
 		if (!isEntityAttributeBoostable(le, eDsc, attr, boostId)) {
 			return;
@@ -137,16 +138,16 @@ public class Boosts {
 
 	}
 
-	private static void reportBoost(LivingEntity le, String eDsc, ResourceLocation boostId, double originalValue,
+	private static void reportBoost(LivingEntity le, String eDsc, Identifier boostId, double originalValue,
 			double newValue) {
-		Utility.debugMsg(1, le,
+		MyUtilities.debugMsg(1, le,
 				"--Boost " + eDsc + " " + boostId.getPath() + " from " + originalValue + " to " + newValue + ".");
 	}
 
 	private static boolean isEntityAttributeBoostable(LivingEntity le, String eDsc, Holder<Attribute> attr,
-			ResourceLocation boostId) {
+			Identifier boostId) {
 		if (le.getAttribute(attr) == null) {
-			Utility.debugMsg(1, le, "erBoost " + eDsc + boostId.getPath() + " mob damage is null  .");
+			MyUtilities.debugMsg(1, le, "erBoost " + eDsc + boostId.getPath() + " mob damage is null  .");
 			return false;
 		}
 
@@ -160,7 +161,7 @@ public class Boosts {
 		try {
 			int preXp = fieldXpReward.getInt(le);
 			fieldXpReward.setInt(le, (int) (fieldXpReward.getInt(le) * (1.0f + distanceModifier)));
-			Utility.debugMsg(2, le,
+			MyUtilities.debugMsg(2, le,
 					"--Boost " + eDsc + " Xp increased from (" + preXp + ") to (" + fieldXpReward.getInt(le) + ")");
 		} catch (Exception e) {
 			LOGGER.error("XXX Unexpected Reflection Failure getting xpReward");
@@ -171,7 +172,7 @@ public class Boosts {
 
 	public static boolean isBoostable(LivingEntity le) {
 
-		Utility.debugMsg(2, "is entity boostable? (" + le.tickCount + " ticks old)");
+		MyUtilities.debugMsg(2, "is entity boostable? (" + le.tickCount + " ticks old)");
 
 		if ((le instanceof Monster) && (le.tickCount > 0) && le.tickCount < 120) {
 			if (le.getAttribute(Attributes.MAX_HEALTH) == null) {
@@ -180,10 +181,10 @@ public class Boosts {
 			if (le.getAttribute(Attributes.MAX_HEALTH).getModifier(HF_HEALTH_BOOST_ID) != null) {
 				return false;
 			}
-			Utility.debugMsg(1, "entity can be boosted.");
+			MyUtilities.debugMsg(1, "entity can be boosted.");
 			return true;
 		}
-		Utility.debugMsg(2, "entity not a monster or 0 ticks old.");
+		MyUtilities.debugMsg(2, "entity not a monster or 0 ticks old.");
 		return false;
 	}
 
@@ -215,7 +216,7 @@ public class Boosts {
 
 	public static void doBoostAbilities(LivingEntity le, String eDsc) {
 
-		Utility.debugMsg(2, "doBoosts");
+		MyUtilities.debugMsg(2, "doBoosts");
 
 		float difficulty = HarderFartherManager.getDifficulty(le);
 		if (difficulty == 0.0f) {

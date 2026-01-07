@@ -12,7 +12,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.phys.Vec3;
 
-public class Utility {
+public class MyUtilities {
 	public final static int FOUR_SECONDS = 80;
 	public final static int TWO_SECONDS = 40;
 	public static final int TICKS_PER_SECOND = 20;
@@ -182,10 +182,10 @@ public class Utility {
 	
 	public static class ItemResult
 	{
-		public final ResourceLocation res;
+		public final Identifier res;
 		public final CompoundTag nbt;
 
-		public ItemResult(ResourceLocation res, @Nullable CompoundTag nbt)
+		public ItemResult(Identifier res, @Nullable CompoundTag nbt)
 		{
 			this.res = res;
 			this.nbt = nbt;

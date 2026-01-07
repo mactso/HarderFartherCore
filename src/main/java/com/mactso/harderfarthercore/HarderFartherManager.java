@@ -6,7 +6,7 @@ import java.util.List;
 import com.mactso.harderfarthercore.config.MyConfig;
 import com.mactso.harderfarthercore.network.Network;
 import com.mactso.harderfarthercore.network.SyncDifficultyToClientsPacket;
-import com.mactso.harderfarthercore.utility.Utility;
+import com.mactso.harderfarthercore.utility.MyUtilities;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -15,7 +15,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
-import net.minecraft.world.level.storage.LevelData;
 
 public class HarderFartherManager {
 
@@ -68,7 +67,7 @@ public class HarderFartherManager {
 	}
 
 	public static float getDifficulty(BlockPos pos) {
-		Utility.debugMsg(2, "HarderFartherManager.getdifficulty top");
+		MyUtilities.debugMsg(2, "HarderFartherManager.getdifficulty top");
 
 		double difficultyHere = 0.0d;
 
@@ -112,13 +111,16 @@ public class HarderFartherManager {
 		}
 
 //		System.out.println("(pos) Diff: " + difficultyHere);
-		Utility.debugMsg(2, "HarderFartherManager.getdifficulty end returning " + difficultyHere);
+		MyUtilities.debugMsg(2, "HarderFartherManager.getdifficulty end returning " + difficultyHere);
 		return (float) difficultyHere;
 	}
+	
+	
+	
 
 	public static float getDifficulty(LivingEntity le) {
 
-		Utility.debugMsg(2, "HarderFartherManager.getdifficulty (le) top");
+		MyUtilities.debugMsg(2, "HarderFartherManager.getdifficulty (le) top");
 		ServerLevel serverLevel = (ServerLevel) le.level();
 		if (serverLevel.isClientSide()) {
 			return 0.0f;
@@ -126,13 +128,13 @@ public class HarderFartherManager {
 		BlockPos pos = le.blockPosition();
 		long gameTime = serverLevel.getGameTime();
 
-		String dimensionName = serverLevel.dimension().location().toString();
+		String dimensionName = serverLevel.dimension().identifier().toString();
 		if (MyConfig.isDimensionOmitted(dimensionName)) {
 			return 0.0f;
 		}
-		if (dimensionName.equals(Level.OVERWORLD.location().toString())) {
+		if (dimensionName.equals(Level.OVERWORLD.identifier().toString())) {
 			if (worldSpawnPos == SURFACE_CENTER_POS) {
-				worldSpawnPos = getWorldSpawnPos(serverLevel);
+				worldSpawnPos = getWorldRespawnPos(serverLevel);
 			}
 		} else if (MyConfig.isOnlyOverworld()) {
 			return 0.0f;
@@ -191,9 +193,9 @@ public class HarderFartherManager {
 
 //		System.out.println (le.getDisplayName().getString());
 		if (le instanceof ServerPlayer sp) {
-			Utility.debugMsg(2,"HFM sending difficulty, spawn:" + worldSpawnDifficulty + " life:" + lifeDifficulty
+			MyUtilities.debugMsg(2,"HFM sending difficulty, spawn:" + worldSpawnDifficulty + " life:" + lifeDifficulty
 					+ " grim:" + grimDifficulty);
-			Utility.debugMsg(2, "getdifficulty here network message");
+			MyUtilities.debugMsg(2, "getdifficulty here network message");
 
 			SyncDifficultyToClientsPacket msg = new SyncDifficultyToClientsPacket((float) difficultyHere,
 					(float) grimDifficulty, (float) lifeDifficulty);
@@ -202,7 +204,7 @@ public class HarderFartherManager {
 		}
 
 //		System.out.println("Diff: " + difficultyHere);
-		Utility.debugMsg(2, "HarderFartherManager.getdifficulty end returning " + difficultyHere);
+		MyUtilities.debugMsg(2, "HarderFartherManager.getdifficulty end returning " + difficultyHere);
 		return (float) difficultyHere;
 
 	}
@@ -248,11 +250,10 @@ public class HarderFartherManager {
 
 	// note there is no code to remove the old worldspawn.
 	// but it will be lost when the game/server restarts.
-	public static BlockPos getWorldSpawnPos(ServerLevel serverLevel) {
-
-		LevelData winfo = serverLevel.getLevelData();
-		return BlockPos.containing(winfo.getSpawnPos().getX(), winfo.getSpawnPos().getY(), winfo.getSpawnPos().getZ());
-
+	public static BlockPos getWorldRespawnPos(ServerLevel level) {
+	    return level.getLevelData()
+	                .getRespawnData()
+	                .pos();
 	}
 
 	private static void makeGrimPointMarker(LivingEntity le, ServerLevel serverLevel, BlockPos pos, long gameTime) {

@@ -7,17 +7,20 @@ import com.mactso.harderfarthercore.Main;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.ChannelBuilder;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.SimpleChannel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.network.CustomPayloadEvent.Context;
+import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.SimpleChannel;
 
 public class Network {
-	public static final SimpleChannel INSTANCE = ChannelBuilder.named(ResourceLocation.fromNamespaceAndPath(Main.MODID, "main"))
+	
+    private Network() {} // prevent accidental instantiation
+    
+	public static final SimpleChannel INSTANCE = ChannelBuilder.named(Identifier.fromNamespaceAndPath(Main.MODID, "main"))
 			.networkProtocolVersion(1).simpleChannel();
 	private static int id = 0;
 

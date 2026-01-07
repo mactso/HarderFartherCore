@@ -10,7 +10,7 @@ import com.mactso.harderfarthercore.config.MyConfig;
 import com.mactso.harderfarthercore.events.LivingEventMovementHandler;
 import com.mactso.harderfarthercore.events.WorldTickHandler;
 import com.mactso.harderfarthercore.network.Register;
-import com.mactso.harderfarthercore.utility.Utility;
+import com.mactso.harderfarthercore.utility.MyUtilities;
 
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
@@ -19,8 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.coremod.api.ASMAPI;
 import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.config.ModConfig;
@@ -36,14 +35,19 @@ public class Main {
 		private static final Logger LOGGER = LogManager.getLogger();
 		private static final int MAX_USABLE_VALUE = 16000000;  // you can subtract 1 from this number.	    
 
-		public Main()
-	    {
-	    	Utility.debugMsg(0, MODID + ": Registering Mod.");
-	  		FMLJavaModLoadingContext.get().getModEventBus().register(this);
- 	        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,MyConfig.COMMON_SPEC );	    	
 
-			
-	    }
+		    
+		    public Main(FMLJavaModLoadingContext context)
+		    {
+				context.registerConfig(ModConfig.Type.COMMON, MyConfig.COMMON_SPEC);
+//		        FMLCommonSetupEvent.getBus(context.getModBusGroup()).addListener(this::handleCommonSetup);
+				
+		        // ✅ Network MUST be initialized here in Main in 1.21.11
+		        Register.initPackets();
+		        
+		        
+		    	MyUtilities.debugMsg(0,MODID + ": Registering Mod.");
+			}
 
 		@OnlyIn(Dist.CLIENT)
 	    @SubscribeEvent
@@ -54,17 +58,12 @@ public class Main {
 			
 	    }
 		
-	    @SubscribeEvent
-	    public void setupCommon(final FMLCommonSetupEvent event)
-	    {
-	        Register.initPackets();
-	    }
-	    
+    
 	    
 		@SubscribeEvent 
 		public void preInit (final FMLCommonSetupEvent event) {
 			
-				Utility.debugMsg(0, MODID + ": Registering Handlers");
+				MyUtilities.debugMsg(0, MODID + ": Registering Handlers");
 				MinecraftForge.EVENT_BUS.register(new WorldTickHandler());
 				MinecraftForge.EVENT_BUS.register(new LivingEventMovementHandler());
 				
@@ -103,7 +102,7 @@ public class Main {
 		{
 			@SubscribeEvent 		
 			public static void onCommandsRegistry(final RegisterCommandsEvent event) {
-				Utility.debugMsg(0,"Harder Farther Core: Registering Command Dispatcher");
+				MyUtilities.debugMsg(0,"Harder Farther Core: Registering Command Dispatcher");
 				MyCommands.register(event.getDispatcher());			
 			}			
 		}

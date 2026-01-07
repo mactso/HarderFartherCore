@@ -9,8 +9,7 @@ import com.mactso.harderfarthercore.Main;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.TickEvent.LevelTickEvent;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
@@ -19,21 +18,20 @@ public class WorldTickHandler {
 
 	// assumes this event only raised for server worlds. TODO verify.
 	@SubscribeEvent
-	public static void onWorldTickEvent(LevelTickEvent event) {
+	public static void onWorldTickEvent(LevelTickEvent.Pre event) {
 
-		if (event.phase == Phase.START)
-			return;
+
 
 		// this is always serverlevel
-		if (event.level instanceof ServerLevel level) {
+		if (event.level() instanceof ServerLevel serverLevel) {
 
 //			if (HarderFartherManager.getWorldSpawnPos(level)== HarderFartherManager.SURFACE_CENTER_POS) {
-			HarderFartherManager.setWorldSpawnPos(HarderFartherManager.getWorldSpawnPos(level));
+			HarderFartherManager.setWorldSpawnPos(HarderFartherManager.getWorldRespawnPos(serverLevel));
 //			}
 			
-			long gametime = level.getGameTime();
+			long gametime = serverLevel.getGameTime();
 
-			List<ServerPlayer> allPlayers = level.getServer().getPlayerList().getPlayers();
+			List<ServerPlayer> allPlayers = serverLevel.getServer().getPlayerList().getPlayers();
 			Iterator<ServerPlayer> apI = allPlayers.iterator();
 			
 //			SyncFogToClientsPacket msg = new SyncFogToClientsPacket(
